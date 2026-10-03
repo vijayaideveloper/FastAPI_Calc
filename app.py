@@ -12,28 +12,33 @@ def health_check():
 def calc(value : UserInput):
 
     if value.choice == 'add':
-        return {"a" : value.a,
+        return {"message" : "ok",
+                "a" : value.a,
                 "b" : value.b,
-                "Choice" : value.choice,
-                "Result" : BaseCalculator(value.a, value.b).add()}
+                "choice" : value.choice,
+                "result" : BaseCalculator(value.a, value.b).add()}
     if value.choice == 'sub':
-        return {"a" : value.a,
+        return {"message" : "ok",
+                "a" : value.a,
                 "b" : value.b,
-                "Choice" : value.choice,
-                "Result" : BaseCalculator(value.a, value.b).subtract()}
+                "choice" : value.choice,
+                "result" : BaseCalculator(value.a, value.b).subtract()}
     if value.choice == 'mul':
-        return {"a" : value.a,
+        return {"message" : "ok",
+                "a" : value.a,
                 "b" : value.b,
-                "Choice" : value.choice,
-                "Result" : BaseCalculator(value.a, value.b).multiply()}
+                "choice" : value.choice,
+                "result" : BaseCalculator(value.a, value.b).multiply()}
     if value.choice == 'div':
-        return {"a" : value.a,
+        return {"message" : "ok",
+                "a" : value.a,
                 "b" : value.b,
-                "Choice" : value.choice,
-                "Result" : BaseCalculator(value.a, value.b).divide()}
+                "choice" : value.choice,
+                "result" : BaseCalculator(value.a, value.b).divide()}
     else:
-        return {"a" : value.a,
+        return {"message" : "ok",
+                "a" : value.a,
                 "b" : value.b,
-                "Choice" : f"Wrong Choice {value.choice}",
-                "Result" : "Failed : Try again !"}
+                "choice" : f"Wrong Choice {value.choice}",
+                "result" : "Failed : Try again !"}
     
