@@ -1,44 +1,51 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Form,Depends
+from fastapi.templating import Jinja2Templates
 from utils.schemas import UserInput
 from calc import BaseCalculator
+
+
 app = FastAPI()
 
-@app.get("/health")
-def health_check():
-    return {"message": "Hello, World!"}
+templates = Jinja2Templates(directory='templates')
+
+
+
+@app.get('/')
+def home(request : Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html"
+    )
+
+
+
+
 
 
 @app.post("/calc")
-def calc(value : UserInput):
+def calc(request : Request,
+         a : float = Form(...),
+         b : float = Form(...),
+         choice : str = Form(...)):
 
-    if value.choice == 'add':
-        return {"message" : "ok",
-                "a" : value.a,
-                "b" : value.b,
-                "choice" : value.choice,
-                "result" : BaseCalculator(value.a, value.b).add()}
-    if value.choice == 'sub':
-        return {"message" : "ok",
-                "a" : value.a,
-                "b" : value.b,
-                "choice" : value.choice,
-                "result" : BaseCalculator(value.a, value.b).subtract()}
-    if value.choice == 'mul':
-        return {"message" : "ok",
-                "a" : value.a,
-                "b" : value.b,
-                "choice" : value.choice,
-                "result" : BaseCalculator(value.a, value.b).multiply()}
-    if value.choice == 'div':
-        return {"message" : "ok",
-                "a" : value.a,
-                "b" : value.b,
-                "choice" : value.choice,
-                "result" : BaseCalculator(value.a, value.b).divide()}
+    if choice == "add":
+        result = BaseCalculator(a, b).add()
+    elif choice == "sub":
+        result = BaseCalculator(a, b).subtract()
+    elif choice == "mul":
+        result = BaseCalculator(a, b).multiply()
+    elif choice == "div":
+        result = BaseCalculator(a, b).divide()
     else:
-        return {"message" : "ok",
-                "a" : value.a,
-                "b" : value.b,
-                "choice" : f"Wrong Choice {value.choice}",
-                "result" : "Failed : Try again !"}
-    
+        result = "Wrong Choice: Try Again!"
+
+
+    return templates.TemplateResponse(request=request,
+                                      name='index.html',
+                                      context={
+                                          "message" : "ok",
+                                          "a" : a,
+                                          "b" : b,
+                                          "choice" : choice,
+                                          "result" : result
+                                      })
